@@ -25,6 +25,8 @@ namespace SommerhusSog.Views
         public BookPage()
         {
             this.InitializeComponent();
+            
+
         }
     }
 }

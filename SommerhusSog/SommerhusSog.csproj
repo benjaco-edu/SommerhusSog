@@ -100,6 +100,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\DataHolder.cs" />
+    <Compile Include="ViewModels\Bookside.cs" />
     <Compile Include="Views\BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
     </Compile>

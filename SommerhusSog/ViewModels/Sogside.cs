@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using SommerhusSog.Annotations;
+using SommerhusSog.Common;
 using SommerhusSog.Models;
 
 namespace SommerhusSog.ViewModels
@@ -32,6 +33,7 @@ namespace SommerhusSog.ViewModels
             get { return _selectecItem; }
             set { _selectecItem = value;
                 MaaBooke = (value != null);
+                DataHolder.selected = value;
                 OnPropertyChanged(); }
         }
 
