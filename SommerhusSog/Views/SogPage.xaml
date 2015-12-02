@@ -1,0 +1,83 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SommerhusSog"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ViewModels="using:SommerhusSog.ViewModels"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    x:Class="SommerhusSog.Views.SogPage"
+    mc:Ignorable="d">
+
+
+    <Page.DataContext>
+        <ViewModels:Sogside/>
+    </Page.DataContext>
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Søg" FontSize="50" Padding="30" Grid.Column="0" Grid.Row="0"/>
+            <StackPanel Grid.Column="0" Grid.Row="1" Padding="10">
+                <TextBlock Text="Title"/>
+                <TextBox Text="{Binding Sog_Navn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Sted"/>
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding Sog_Sted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem Content="Alle steder" Height="100" Width="100"/>
+                    <ComboBoxItem Content="Frankrig" Height="100" Width="100"/>
+                    <ComboBoxItem Content="Spanien" Height="100" Width="100"/>
+                </ComboBox>
+                <TextBlock Text="Max prix"/>
+                <TextBox Text="{Binding Sog_Pris, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Min antal værelser"/>
+                <TextBox Text="{Binding Sog_AntalVaerelser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="{Binding AntalReultater}"/>
+                <Button Content="Søg" HorizontalAlignment="Right" >
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="Click">
+                            <Core:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="Soeg"/>
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+
+
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Resultater" FontSize="50" Padding="30" Grid.Column="0" Grid.Row="0"/>
+            <ListBox Grid.Column="0" Grid.Row="1" Padding="10" ItemsSource="{Binding SoegteHuse}" SelectedItem="{Binding SelectecItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel Grid.Column="0" Grid.Row="2" Padding="0,10,0,0">
+                <Button Content="Book" IsEnabled="{Binding MaaBooke}"  >
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="Click">
+                            <Core:NavigateToPageAction TargetPage="SommerhusSog.Views.BookPage" Parameter="{Binding SelectecItem}"/>
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Page>
