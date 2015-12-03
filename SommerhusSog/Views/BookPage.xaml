@@ -24,9 +24,20 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Book sommerhus" FontSize="50" Padding="30" Grid.Column="0" Grid.Row="0"/>
+        <StackPanel  Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+            <AppBarButton Margin="30,30,10,0" BorderThickness="10,0,0,0" Icon="Back" HorizontalAlignment="Stretch">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="Back"/>
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+            <TextBlock Text="Book sommerhus" FontSize="50" Margin="0,30,0,0"/>
+        </StackPanel>
 
-        <TextBlock Text="Bruger oplysninger" FontSize="40" Padding="30" Grid.Column="1" Grid.Row="0"/>
+
+
+        <TextBlock Text="Bruger oplysninger" FontSize="20" Padding="30,60,0,0" Grid.Column="1" Grid.Row="0"/>
 
         <TextBlock Text="{Binding SelectedHus}" Padding="30" Grid.Column="0" Grid.Row="1"/>
 
@@ -46,7 +57,7 @@
                         <core:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="Book"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
-                
+
             </Button>
 
         </StackPanel>

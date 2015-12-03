@@ -7,6 +7,8 @@ using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactions.Core;
 using SommerhusSog.Annotations;
 using SommerhusSog.Common;
@@ -30,6 +32,10 @@ namespace SommerhusSog.ViewModels
 
         public void Book() {
             new MessageDialog($"Booking\n\n{SelectedHus}\n\n\nNavn:{Navn}\nTelefon nr.{Telefonnr}\nEmail:{Email}\nAdresse{Adresse}").ShowAsync();
+        }
+
+        public void Back() {
+            ((Frame)Window.Current.Content).GoBack();
         }
 
         #region PropertyChanged

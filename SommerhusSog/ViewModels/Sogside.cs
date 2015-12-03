@@ -18,11 +18,11 @@ namespace SommerhusSog.ViewModels
 
 
         public ObservableCollection<Hus> AlleHuse;
-        private ObservableCollection<Hus> _soegteHuse;
-        private string _sogNavn;
-        private int _sogSted = 0;
-        private string _sogAntalVaerelser;
-        private string _sogPris;
+        private static ObservableCollection<Hus> _soegteHuse;
+        private static string _sogNavn;
+        private static int _sogSted = 0;
+        private static string _sogAntalVaerelser;
+        private static string _sogPris;
 
         public Boolean MaaBooke {
             get { return _maaBooke; }
@@ -43,9 +43,9 @@ namespace SommerhusSog.ViewModels
         }
 
         private string[] lande = new string[] {"", "Frankrig", "Spanien" };
-        private string _antalReultater;
-        private Hus _selectecItem;
-        private bool _maaBooke;
+        private static string _antalReultater;
+        private static Hus _selectecItem;
+        private static bool _maaBooke;
 
         public ObservableCollection<Hus> SoegteHuse {
             get { return _soegteHuse;  }
@@ -73,8 +73,13 @@ namespace SommerhusSog.ViewModels
 
         public Sogside() {
             AlleHuse = new ObservableCollection<Hus>();
-            _soegteHuse = new ObservableCollection<Hus>();
-            Sog_Navn = "";
+            if (_soegteHuse == null) {
+                _soegteHuse = new ObservableCollection<Hus>();
+            }
+            if (Sog_Navn == null)
+            {
+                Sog_Navn = "";
+            }
             #region dummydata
             AlleHuse.Add(new Hus("Hus #1", "Frankrig", 7, 7999, "blabla"));
             AlleHuse.Add(new Hus("Hus #2", "Frankrig", 4, 4999, "blabla"));
@@ -150,9 +155,7 @@ namespace SommerhusSog.ViewModels
             AntalReultater = huse.Count()+" resultater";
         }
 
-        public void Book() {
-
-        }
+        
 
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
