@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Common\DataHolder.cs" />
     <Compile Include="Models\Kalender.cs" />
+    <Compile Include="Models\KollektionHus.cs" />
     <Compile Include="Models\Lejer.cs" />
     <Compile Include="ViewModels\Bookside.cs" />
     <Compile Include="Views\BookPage.xaml.cs">

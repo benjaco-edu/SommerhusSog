@@ -17,7 +17,6 @@ namespace SommerhusSog.ViewModels
 
 
 
-        public ObservableCollection<Hus> AlleHuse;
         private static ObservableCollection<Hus> _soegteHuse;
         private static string _sogNavn;
         private static int _sogSted = 0;
@@ -72,7 +71,6 @@ namespace SommerhusSog.ViewModels
         }
 
         public Sogside() {
-            AlleHuse = new ObservableCollection<Hus>();
             if (_soegteHuse == null) {
                 _soegteHuse = new ObservableCollection<Hus>();
             }
@@ -80,20 +78,13 @@ namespace SommerhusSog.ViewModels
             {
                 Sog_Navn = "";
             }
-            #region dummydata
-            AlleHuse.Add(new Hus("Hus #1", "Frankrig", 7, 7999, "blabla"));
-            AlleHuse.Add(new Hus("Hus #2", "Frankrig", 4, 4999, "blabla"));
-            AlleHuse.Add(new Hus("Hus #4", "Spanien", 3, 3999, "blabla"));
-            AlleHuse.Add(new Hus("Hus #5", "Spanien", 5, 5999, "blabla"));
-            AlleHuse.Add(new Hus("Hus #6", "Frankrig", 1, 1999, "blabla"));
-            AlleHuse.Add(new Hus("Hus #7", "Frankrig", 2, 2999, "blabla"));
-            #endregion
+
 
             UpdateCount();
         }
 
         public void Soeg() {
-            var huse = AlleHuse.Where(h=>true);
+            var huse = KollektionHus.HentAlle().Where(h=>true);
             if (Sog_Sted != 0) {
                 huse = huse.Where(
                     h =>
@@ -124,7 +115,7 @@ namespace SommerhusSog.ViewModels
         }
 
         public void UpdateCount() {
-            var huse = AlleHuse.Where(h => true);
+            var huse = KollektionHus.HentAlle().Where(h => true);
             if (Sog_Sted != 0)
             {
                 huse = huse.Where(

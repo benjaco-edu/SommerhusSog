@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System;
 
-namespace SommerhusSog.Models
+namespace  SommerhusSog.Models 
 {
     public class Hus
     {
