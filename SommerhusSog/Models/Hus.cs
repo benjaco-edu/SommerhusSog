@@ -1,4 +1,6 @@
-﻿namespace SommerhusSog.Models
+﻿using System.Collections.Generic;
+
+namespace SommerhusSog.Models
 {
     public class Hus
     {
@@ -8,6 +10,10 @@
         public int Pris { get; set; }
         public string Addresse { get; set; }
 
+        public Dictionary<string, Lejer> HusKalender {get;set;} 
+
+
+
         public Hus(string navn, string land, int antalVaerelser, int pris, string addresse) {
             Navn = navn;
             Land = land;
@@ -15,6 +21,7 @@
             Pris = pris;
             Addresse = addresse;
         }
+
 
         public override string ToString() {
             return Navn+", "+Land+", "+AntalVaerelser+", "+Pris+", "+Addresse;
