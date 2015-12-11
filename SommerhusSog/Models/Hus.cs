@@ -4,6 +4,8 @@ using System;
 
 namespace  SommerhusSog.Models 
 {
+
+    
     public class Hus
     {
         public string Navn { get; set; }
@@ -22,6 +24,7 @@ namespace  SommerhusSog.Models
             AntalVaerelser = antalVaerelser;
             Pris = pris;
             Addresse = addresse;
+            HusKalender = new Dictionary<string, Lejer>();
         }
 
 

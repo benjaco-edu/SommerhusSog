@@ -22,6 +22,8 @@ namespace SommerhusSog.ViewModels
         private static int _sogSted = 0;
         private static string _sogAntalVaerelser;
         private static string _sogPris;
+        private static string _sogAar;
+        private static string _sogUge;
 
         public Boolean MaaBooke {
             get { return _maaBooke; }
@@ -70,6 +72,18 @@ namespace SommerhusSog.ViewModels
             set { _sogPris = value; OnPropertyChanged(); UpdateCount(); }
         }
 
+        public string Sog_Aar {
+            get { return _sogAar; }
+            set { _sogAar=value; OnPropertyChanged(); UpdateCount(); }
+        }
+
+        public string Sog_Uge {
+            get { return _sogUge; }
+            set { _sogUge=value; OnPropertyChanged(); UpdateCount(); }
+        }
+
+            
+
         public Sogside() {
             if (_soegteHuse == null) {
                 _soegteHuse = new ObservableCollection<Hus>();
@@ -107,6 +121,16 @@ namespace SommerhusSog.ViewModels
             if (!Sog_Navn.Equals("")) {
                 huse = huse.Where(h => h.Navn.Contains(Sog_Navn));
             }
+            int uge, aar;
+            if (Int32.TryParse(Sog_Aar, out aar) && Int32.TryParse(Sog_Uge, out uge))
+            {
+                if (aar >= Kalender.GetYear() && uge <= Kalender.GetWeeksInYear(aar) && (uge > Kalender.GetWeekOfYear() || aar > Kalender.GetYear())) {
+                    huse = huse.Where(h => Kalender.ErLedig(h, uge, aar));
+                }
+                else {
+                    new MessageDialog($"Intast en valid uge").ShowAsync();
+                }
+            }
 
             _soegteHuse.Clear();
             foreach (Hus hus in huse) {
@@ -142,6 +166,15 @@ namespace SommerhusSog.ViewModels
             {
                 huse = huse.Where(h => h.Navn.Contains(Sog_Navn));
             }
+
+            int uge, aar;
+            if (Int32.TryParse(Sog_Aar, out aar) && Int32.TryParse(Sog_Uge, out uge)) {
+                if (aar >= Kalender.GetYear() && ( uge>Kalender.GetWeekOfYear() || aar > Kalender.GetYear() ) ) {
+                    huse = huse.Where(h => Kalender.ErLedig(h, uge, aar) );
+                }
+            }
+
+
 
             AntalReultater = huse.Count()+" resultater";
         }

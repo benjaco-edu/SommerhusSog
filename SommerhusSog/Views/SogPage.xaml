@@ -41,10 +41,15 @@
                     <ComboBoxItem Content="Frankrig" Height="100" Width="100"/>
                     <ComboBoxItem Content="Spanien" Height="100" Width="100"/>
                 </ComboBox>
-                <TextBlock Text="Max prix"/>
+                <TextBlock Text="Max pris"/>
                 <TextBox Text="{Binding Sog_Pris, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Text="Min antal værelser"/>
                 <TextBox Text="{Binding Sog_AntalVaerelser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Uge"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding Sog_Aar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="År" />
+                    <TextBox Text="{Binding Sog_Uge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Uge" Margin="10,0,0,0" />
+                </StackPanel>
                 <TextBlock Text="{Binding AntalReultater}"/>
                 <Button Content="Søg" HorizontalAlignment="Right" Margin="0,10,0,0" >
                     <Interactivity:Interaction.Behaviors>
