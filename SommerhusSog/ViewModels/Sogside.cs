@@ -23,6 +23,8 @@ namespace SommerhusSog.ViewModels
         private static int _sogSted = 0;
         private static string _sogAntalVaerelser;
         private static string _sogPris;
+        private static string _sogAar;
+        private static string _sogUge;
 
         public Boolean MaaBooke {
             get { return _maaBooke; }
@@ -71,6 +73,18 @@ namespace SommerhusSog.ViewModels
             set { _sogPris = value; OnPropertyChanged(); UpdateCount(); }
         }
 
+        public string Sog_Aar {
+            get { return _sogAar; }
+            set { _sogAar=value; OnPropertyChanged(); UpdateCount(); }
+        }
+
+        public string Sog_Uge {
+            get { return _sogUge; }
+            set { _sogUge=value; OnPropertyChanged(); UpdateCount(); }
+        }
+        
+            
+
         public Sogside() {
             AlleHuse = new ObservableCollection<Hus>();
             if (_soegteHuse == null) {
@@ -87,6 +101,8 @@ namespace SommerhusSog.ViewModels
             AlleHuse.Add(new Hus("Hus #5", "Spanien", 5, 5999, "blabla"));
             AlleHuse.Add(new Hus("Hus #6", "Frankrig", 1, 1999, "blabla"));
             AlleHuse.Add(new Hus("Hus #7", "Frankrig", 2, 2999, "blabla"));
+
+            AlleHuse[0].HusKalender.Add("2015/51", new Lejer("Hans", "54545698", " ", ""));
             #endregion
 
             UpdateCount();
@@ -115,6 +131,16 @@ namespace SommerhusSog.ViewModels
             }
             if (!Sog_Navn.Equals("")) {
                 huse = huse.Where(h => h.Navn.Contains(Sog_Navn));
+            }
+            int uge, aar;
+            if (Int32.TryParse(Sog_Aar, out aar) && Int32.TryParse(Sog_Uge, out uge))
+            {
+                if (aar >= Kalender.GetYear() && uge <= Kalender.GetWeeksInYear(aar) && (uge > Kalender.GetWeekOfYear() || aar > Kalender.GetYear())) {
+                    huse = huse.Where(h => Kalender.ErLedig(h, uge, aar));
+                }
+                else {
+                    new MessageDialog($"Intast en valid uge").ShowAsync();
+                }
             }
 
             _soegteHuse.Clear();
@@ -151,6 +177,15 @@ namespace SommerhusSog.ViewModels
             {
                 huse = huse.Where(h => h.Navn.Contains(Sog_Navn));
             }
+
+            int uge, aar;
+            if (Int32.TryParse(Sog_Aar, out aar) && Int32.TryParse(Sog_Uge, out uge)) {
+                if (aar >= Kalender.GetYear() && ( uge>Kalender.GetWeekOfYear() || aar > Kalender.GetYear() ) ) {
+                    huse = huse.Where(h => Kalender.ErLedig(h, uge, aar) );
+                }
+            }
+
+
 
             AntalReultater = huse.Count()+" resultater";
         }
