@@ -5,16 +5,29 @@ namespace SommerhusSog.Models
 {
     public class Kalender
     {
+        // Check i kalender dictionairy om givne dato er ledig.
         public static Boolean ErLedig(Hus hus, int uge, int aar)
         {
             return !hus.HusKalender.ContainsKey(aar + "/" + uge);
         }
-
+        // Booking funktionalitet, Hvis ledig: Book retunér True, ellers false.
+        public static Boolean Book(Hus hus, int uge, int aar, Lejer lejer)
+        {
+            if (ErLedig(hus, uge, aar))
+            {
+                hus.HusKalender.Add(aar + "/" + uge, lejer);
+                KollektionHus.GemAlle();
+                return true;
+            }
+            return false;
+        }
+        // Hvilket år ?
         public static int GetYear()
         {
             return CultureInfo.InvariantCulture.Calendar.GetYear(DateTime.Now);
         }
 
+        // Find hvor mange uger der findes i år. 
         public static int GetWeeksInYear(int year)
         {
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;

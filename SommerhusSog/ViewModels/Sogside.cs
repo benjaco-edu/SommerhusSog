@@ -33,8 +33,8 @@ namespace SommerhusSog.ViewModels
         public Hus SelectecItem {
             get { return _selectecItem; }
             set { _selectecItem = value;
+                Dataholder.SelectedHus = value;
                 MaaBooke = (value != null);
-                DataHolder.selected = value;
                 OnPropertyChanged(); }
         }
 
@@ -74,12 +74,14 @@ namespace SommerhusSog.ViewModels
 
         public string Sog_Aar {
             get { return _sogAar; }
-            set { _sogAar=value; OnPropertyChanged(); UpdateCount(); }
+            set { _sogAar=value;
+                Dataholder.SelectedAar = value; OnPropertyChanged(); UpdateCount(); }
         }
 
         public string Sog_Uge {
             get { return _sogUge; }
-            set { _sogUge=value; OnPropertyChanged(); UpdateCount(); }
+            set { _sogUge=value;
+                Dataholder.SelectedUge = value; OnPropertyChanged(); UpdateCount(); }
         }
 
             
@@ -95,6 +97,7 @@ namespace SommerhusSog.ViewModels
 
 
             UpdateCount();
+            Soeg();
         }
 
         public void Soeg() {

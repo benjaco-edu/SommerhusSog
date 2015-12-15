@@ -1,9 +1,13 @@
-﻿using SommerhusSog.Models;
+﻿using System;
+using SommerhusSog.Models;
 
 namespace SommerhusSog.Common
 {
-    public class DataHolder
+    public class Dataholder
     {
-        public static Hus selected;
+        public static Hus SelectedHus;
+        public static String SelectedUge;
+        public static String SelectedAar;
+
     }
 }

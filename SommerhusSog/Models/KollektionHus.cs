@@ -1,10 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using Windows.Storage;
 using Newtonsoft.Json;
 
 namespace SommerhusSog.Models
 {
+    // Klasse til Hentning og Gemning af Hus kollektionen. 
     public class KollektionHus
     {
         private static string _saveFile = ApplicationData.Current.RoamingFolder.Path + "/" + "KollektionHus.json";
@@ -19,9 +21,7 @@ namespace SommerhusSog.Models
         public static ObservableCollection<Hus> HentAlle()
         {
 
-
             // Hvis der ingen fil findes ved filestream
-
             if (!File.Exists(SrcJSON))
             {
                 #region Dummy data
@@ -36,30 +36,35 @@ namespace SommerhusSog.Models
                 Husene.Add(new Hus("Hus #8", "Frankrig", 2, 2999, "blabla"));
                 Husene.Add(new Hus("Hus #9", "Frankrig", 2, 2999, "blabla"));
                 Husene.Add(new Hus("Hus #10", "Frankrig", 2, 2999, "blabla"));
+                
                 GemAlle();
                 #endregion
-                return Husene;
             }
-            else
+            // Hvis json fil findes, hent derfra
+            else if (Husene == null)
             {
-                return HentFraFil();
+                HentFraFil();
             }
+            
+            return Husene;
         }
+
+        // gem alle hus objekter til json fil!
         public static void GemAlle()
         {
             if (Husene != null)
             {
                 string json = JsonConvert.SerializeObject(Husene);
                 File.WriteAllText(SrcJSON, json);
-
             }
         }
 
-        private static ObservableCollection<Hus> HentFraFil()
+        // Hent og konverter alle hus objekter fra fil
+        private static void HentFraFil()
         {
-            string her = File.ReadAllText(SrcJSON);
-            ObservableCollection<Hus> huse = JsonConvert.DeserializeObject<ObservableCollection<Hus>>(her);
-            return huse;
+            string jsonData = File.ReadAllText(SrcJSON);
+            
+            Husene = JsonConvert.DeserializeObject<ObservableCollection<Hus>>(jsonData);
         }
 
     }
