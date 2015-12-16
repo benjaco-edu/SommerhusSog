@@ -9,6 +9,7 @@ namespace SommerhusSog.Models
     // Klasse til Hentning og Gemning af Hus kollektionen. 
     public class KollektionHus
     {
+        // Lokation hvor json fil skal gemmes
         private static string _saveFile = ApplicationData.Current.RoamingFolder.Path + "/" + "KollektionHus.json";
         private static ObservableCollection<Hus> Husene = null;
 
@@ -21,7 +22,7 @@ namespace SommerhusSog.Models
         public static ObservableCollection<Hus> HentAlle()
         {
 
-            // Hvis der ingen fil findes ved filestream
+            // Hvis fil ikke kan findes, så indsæt dummy data
             if (!File.Exists(SrcJSON))
             {
                 #region Dummy data

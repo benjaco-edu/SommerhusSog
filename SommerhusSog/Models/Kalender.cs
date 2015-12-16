@@ -41,6 +41,7 @@ namespace SommerhusSog.Models
             }
         }
 
+        // find hvor mange uger per år. 
         public static int GetWeekOfYear()
         {
             DateTime time = DateTime.Now;

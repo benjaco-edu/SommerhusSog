@@ -13,7 +13,7 @@ namespace SommerhusSog.Models
         public string Email { get; set; }
         public string Adresse { get; set; }
 
-
+        // Konstruktor til at indeholde lejer information. 
         public Lejer(string navn, string telefonnr, string email, string adresse) {
             Navn = navn;
             Telefonnr = telefonnr;

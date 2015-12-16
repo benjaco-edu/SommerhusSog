@@ -13,11 +13,10 @@ namespace  SommerhusSog.Models
         public int AntalVaerelser { get; set; }
         public int Pris { get; set; }
         public string Addresse { get; set; }
-
-        public Dictionary<string, Lejer> HusKalender {get;set;} 
-
+        public Dictionary<string, Lejer> HusKalender { get; set; } 
 
 
+        // Simpel konstruktor som indsætter parametre i en Diktionary 
         public Hus(string navn, string land, int antalVaerelser, int pris, string addresse) {
             Navn = navn;
             Land = land;
@@ -27,7 +26,7 @@ namespace  SommerhusSog.Models
             HusKalender = new Dictionary<string, Lejer>();
         }
 
-
+        // Udskriv methode
         public override string ToString() {
             return Navn+", "+Land+", "+AntalVaerelser+", "+Pris+", "+Addresse;
         }

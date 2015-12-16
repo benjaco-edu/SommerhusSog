@@ -18,6 +18,8 @@ namespace SommerhusSog.ViewModels
 {
     class Bookside : INotifyPropertyChanged
     {
+
+        // Properties
         public string Navn { get; set; }
         public string Telefonnr { get; set; }
         public string Email { get; set; }
@@ -29,6 +31,7 @@ namespace SommerhusSog.ViewModels
             set { _synligStatus = value; OnPropertyChanged();}
         }
 
+        // når år og uge opdates checkes om datoen er ledig
         public string Aar
         {
             get { return _aar; }
@@ -60,21 +63,26 @@ namespace SommerhusSog.ViewModels
         public Hus SelectedHus { get; set; }
         public Bookside()
         {
+            // når booksiden loades hentes de værdier der skulle overføres for søgesiden, værdierne blev sat da de blev ændret på søgesiden
             SelectedHus = Dataholder.SelectedHus;
             Aar = Dataholder.SelectedAar;
             Uge = Dataholder.SelectedUge;
 
+            // tester om dagen der kom med er ledig
             TestBookAvalible();
             
         }
 
         public void TestBookAvalible()
         {
+            // hvis datoen er gyldig, hvis ja testes om datoen er ledig
             int uge, aar;
             if (Int32.TryParse(Aar, out aar) && Int32.TryParse(Uge, out uge))
             {
+                // søg kun efter data hvis ugen kommer efter den uge man er i
                 if (aar >= Kalender.GetYear() && uge <= Kalender.GetWeeksInYear(aar) && (uge > Kalender.GetWeekOfYear() || aar > Kalender.GetYear()))
                 {
+                    // så se om man kan booke den
                     MaaBooke = Kalender.ErLedig(SelectedHus, uge, aar);
                 }
                 else
@@ -92,8 +100,10 @@ namespace SommerhusSog.ViewModels
             int uge, aar;
             if (Int32.TryParse(Aar, out aar) && Int32.TryParse(Uge, out uge))
             {
+                // søg kun efter data hvis ugen kommer efter den uge man er i
                 if (aar >= Kalender.GetYear() && uge <= Kalender.GetWeeksInYear(aar) && (uge > Kalender.GetWeekOfYear() || aar > Kalender.GetYear()))
                 {
+                    // book den hvis man kan
                     Boolean bookede = Kalender.Book(SelectedHus, uge, aar, new Lejer(Navn, Telefonnr, Email, Adresse));
                     if (bookede)
                     {
@@ -108,6 +118,7 @@ namespace SommerhusSog.ViewModels
         }
 
         public void Back() {
+            // gå tilbage til sidste side
             ((Frame)Window.Current.Content).GoBack();
         }
 

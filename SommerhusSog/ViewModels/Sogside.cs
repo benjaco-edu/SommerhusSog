@@ -16,7 +16,7 @@ namespace SommerhusSog.ViewModels
     {
 
 
-
+        // Properties - gemmer i statiske felter så formen ikke er tom når man kommer tilbage
         private static ObservableCollection<Hus> _soegteHuse;
         private static string _sogNavn;
         private static int _sogSted = 0;
@@ -29,7 +29,7 @@ namespace SommerhusSog.ViewModels
             get { return _maaBooke; }
             set { _maaBooke = value; OnPropertyChanged(); }
         }
-
+        // Valg fra View bliver sat og opdateret her
         public Hus SelectecItem {
             get { return _selectecItem; }
             set { _selectecItem = value;
@@ -38,11 +38,14 @@ namespace SommerhusSog.ViewModels
                 OnPropertyChanged(); }
         }
 
+        // return Antal når View forespørger hvor mange resultater udfra søgning parametre
         public string AntalReultater {
             get { return _antalReultater; }
             set { _antalReultater = value; OnPropertyChanged(); }
         }
 
+        // Properties 
+        // Lande er hardcoded pga. det kun er en prototype
         private string[] lande = new string[] {"", "Frankrig", "Spanien" };
         private static string _antalReultater;
         private static Hus _selectecItem;
@@ -51,7 +54,7 @@ namespace SommerhusSog.ViewModels
         public ObservableCollection<Hus> SoegteHuse {
             get { return _soegteHuse;  }
         } 
-
+        // opdate antallet af resultater når felterne ændres
         public string Sog_Navn {
             get { return _sogNavn; }
             set { _sogNavn = value; OnPropertyChanged(); UpdateCount(); }
@@ -87,21 +90,27 @@ namespace SommerhusSog.ViewModels
             
 
         public Sogside() {
+            // hvis listen af søgte sommerhuse er tom er det fordi appen lige er blevet åbnet, ellers viser den søge resultater for forrige søgning
             if (_soegteHuse == null) {
                 _soegteHuse = new ObservableCollection<Hus>();
             }
+            // samme som ovenstående
             if (Sog_Navn == null)
             {
                 Sog_Navn = "";
             }
 
-
+            // viser antal af alle sommerhuse når appen loades da der ingen søge filtre er
             UpdateCount();
+            // samme, bare med items
             Soeg();
         }
 
         public void Soeg() {
-            var huse = KollektionHus.HentAlle().Where(h=>true);
+            // convetere liste til IEnumerable<Hus>
+            IEnumerable<Hus> huse = KollektionHus.HentAlle().Where(h=>true);
+
+            // hvis dropdown item er det første, så skal den ikke sortere efter land
             if (Sog_Sted != 0) {
                 huse = huse.Where(
                     h =>
@@ -127,14 +136,15 @@ namespace SommerhusSog.ViewModels
             int uge, aar;
             if (Int32.TryParse(Sog_Aar, out aar) && Int32.TryParse(Sog_Uge, out uge))
             {
+                // søg kun efter data hvis ugen kommer efter den uge man er i
                 if (aar >= Kalender.GetYear() && uge <= Kalender.GetWeeksInYear(aar) && (uge > Kalender.GetWeekOfYear() || aar > Kalender.GetYear())) {
                     huse = huse.Where(h => Kalender.ErLedig(h, uge, aar));
                 }
                 else {
-                    new MessageDialog($"Intast en valid uge").ShowAsync();
+                    new MessageDialog($"Indtast en gyldig uge").ShowAsync();
                 }
             }
-
+            // ryd liste af resultater og indsæt de nye
             _soegteHuse.Clear();
             foreach (Hus hus in huse) {
                 _soegteHuse.Add(hus);
@@ -142,7 +152,9 @@ namespace SommerhusSog.ViewModels
         }
 
         public void UpdateCount() {
-            var huse = KollektionHus.HentAlle().Where(h => true);
+            //gøre det samme som soeg funktionen, men henter bare antalt i bunden istedet for at opdate listen
+
+            IEnumerable<Hus> huse = KollektionHus.HentAlle().Where(h => true);
             if (Sog_Sted != 0)
             {
                 huse = huse.Where(
